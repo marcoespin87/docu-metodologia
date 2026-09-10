@@ -1,0 +1,9 @@
+{
+  "name": "caso1-sistema-pedidos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Caso 1 (desde cero) — metodologia SDD spec-anchored",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}

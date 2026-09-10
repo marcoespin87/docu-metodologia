@@ -1,0 +1,9 @@
+{
+  "name": "caso3-filtro-a-servidor",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Caso 3 (modificacion de requerimiento existente) — metodologia SDD spec-anchored",
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  }
+}
