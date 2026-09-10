@@ -40,7 +40,7 @@ flowchart TD
 | **Spec** (`docs/specs/spec-<capacidad>.md`) | Uno **por capacidad** del sistema | Persistente | Comportamiento **AS-BUILT** (lo que corre), invariantes con su porqué, decisiones fechadas, fuera de alcance, referencias |
 | **Índice de specs** (`docs/specs/README.md`) | 1 | Persistente | Convención + tabla capacidad → spec |
 | **Plan** (`docs/plan-<tema>-<fecha>.md`) | Uno por cambio (o por familia de cambios en fases) | Transitorio | Propuesta: contexto, delta, decisiones tomadas, enfoque técnico, fases/tareas, criterios de aceptación, pendientes de decisión |
-| **Documento de arquitectura y convenciones** (`CLAUDE.md` raíz + uno por subproyecto) | 1 por proyecto/subproyecto | Persistente | Patrón arquitectónico, límites entre servicios, invariantes transversales (concurrencia, seguridad, portabilidad), restricciones del entorno, comandos |
+| **Documento de arquitectura y convenciones** (`docs/arquitectura.md` o el archivo de contexto que el asistente de IA lea automáticamente al iniciar sesión: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, etc.) | 1 por proyecto (+ uno por subproyecto si aplica) | Persistente | Patrón arquitectónico, límites entre servicios, invariantes transversales (concurrencia, seguridad, portabilidad), restricciones del entorno, comandos |
 
 **Precedencia cuando dos documentos difieren:** `spec` > documento de arquitectura > memoria de sesión, apuntes o docs históricos. Lo que no es spec es índice, caché o plan.
 
@@ -87,7 +87,7 @@ Las dos secciones que más valor aportan al trabajo con LLM son **Invariantes co
 
 ## 3. Reglas operativas
 
-**3.1 Specs primero.** Al iniciar cualquier cambio, el LLM lee el spec de la capacidad afectada **antes** de proponer. Esta instrucción vive en el documento de arquitectura (`CLAUDE.md`) para que se aplique en cada sesión sin depender de que alguien lo recuerde.
+**3.1 Specs primero.** Al iniciar cualquier cambio, el LLM lee el spec de la capacidad afectada **antes** de proponer. Esta instrucción vive en el documento de arquitectura y convenciones, que debe ser el archivo de contexto que el asistente de IA cargue automáticamente al iniciar sesión (cada herramienta tiene el suyo: `AGENTS.md`, `CLAUDE.md`, `.cursorrules`, instrucciones de proyecto, etc.), para que se aplique en cada sesión sin depender de que alguien lo recuerde.
 
 **3.2 Qué es y qué no es un cambio de comportamiento.** Solo los cambios de comportamiento obligan a tocar el spec:
 
@@ -174,7 +174,7 @@ Lecciones de aplicarlo en un sistema real (baseline de 9 specs, 2026-08-31):
 - **La ingeniería inversa encuentra bugs y código muerto.** Salieron un fix de hallazgos colaterales y la eliminación de un servicio sin consumidores. Esos arreglos van en MRs separados del baseline para que el diff del spec sea revisable.
 - **Incremental por capacidad** funciona; "todo el spec de una vez" no es revisable por un humano.
 - **Marcar inferido vs confirmado** en el candidato dirige la revisión a donde está el riesgo.
-- Lo que había en memorias de sesión, apuntes y CLAUDE.md pasa a ser **caché** del spec: se conserva como índice, pero deja de mandar.
+- Lo que había en memorias de sesión, apuntes y documentos de contexto del asistente pasa a ser **caché** del spec: se conserva como índice, pero deja de mandar.
 
 ---
 
@@ -212,7 +212,7 @@ flowchart LR
 
 ## 6. Arquitectura y decisiones estructurales
 
-Decisiones como el patrón arquitectónico, los límites de cada servicio y cómo se comunican **no son delta de comportamiento** y no deben quedar enterradas en el plan de un solo cambio. Se resuelven con el **documento de arquitectura y convenciones** (sección 2): en este proyecto, `CLAUDE.md` en la raíz más uno por subproyecto.
+Decisiones como el patrón arquitectónico, los límites de cada servicio y cómo se comunican **no son delta de comportamiento** y no deben quedar enterradas en el plan de un solo cambio. Se resuelven con el **documento de arquitectura y convenciones** (sección 2), único por proyecto (más uno por subproyecto en monorepos). Es independiente de la herramienta de IA: si el asistente usado carga un archivo de contexto al iniciar (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`, instrucciones de proyecto), ese archivo debe ser este documento o enlazarlo, para que ningún cambio arranque sin él.
 
 - Se define en el primer cambio de un Caso 1 (o en la Fase 0 de un Caso 5).
 - Se **lee** como contexto obligatorio en la Exploración/Propuesta de cualquier cambio.
