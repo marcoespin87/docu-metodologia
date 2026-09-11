@@ -35,17 +35,16 @@ Hoy la carpeta está completamente vacía.
 
 **Prompt:**
 ```
-Estamos en proyectos/caso1. La carpeta está completamente vacía: no hay
-código, ni documentación, ni nada armado todavía.
+Estamos en proyectos/caso1, un proyecto vacío. Vamos a construir un sistema avanzado de gestión de pedidos desde cero. 
 
-Quiero construir un sistema de gestión de pedidos: crear pedido, ver
-historial de pedidos, cambiar el estado de un pedido (pendiente, enviado,
-entregado, cancelado).
-
-Te adjunto el documento con la forma de trabajo que tenés que seguir de
-punta a punta para este proyecto. Seguilo estrictamente. Pedime lo que
-necesites de mí a medida que avances, y avisame antes de pasar a la
-siguiente etapa.
+Las funcionalidades a desarrollar incluyen:
+1. Ciclo de vida del pedido: Crear pedido (soportando múltiples productos/líneas, cálculo de impuestos y subtotales), ver historial detallado y cambiar estados (ej. Pendiente, Procesando, Pagado, Enviado, Entregado, Cancelado).
+2. Autenticación y Autorización: Control de acceso basado en roles (RBAC) con perfiles como "Cliente" (solo ve sus pedidos) y "Administrador/Soporte" (gestión global).
+3. Control de Inventario: Validación de disponibilidad de productos y reserva de stock al momento de crear el pedido.
+4. Búsqueda y Filtrado: Paginación y filtros avanzados en el historial (por rango de fechas, estado, cliente o ID de transacción).
+5. Pagos: Simulación de integración con pasarela de pagos (transiciones de estado automáticas tras pago exitoso o fallido).
+6. Notificaciones: Arquitectura orientada a eventos para disparar notificaciones (simuladas por email/SMS) cada vez que un pedido cambie de estado.
+7. Logística y Post-venta: Asignación de guías de envío (tracking), manejo de cancelaciones y devoluciones con reposición de inventario.
 ```
 
 ---
