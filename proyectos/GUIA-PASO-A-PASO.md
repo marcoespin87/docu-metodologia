@@ -234,7 +234,11 @@ Muéstrame el diff del spec para que lo revise antes de cerrar.
 
 Parte de `caso3` ya terminado. Las cuatro fases aplican, pero con delta
 **nulo** — se repiten (Propuesta → Aplicación → Verificación) módulo por
-módulo, no todas juntas.
+módulo, no todas juntas. Como el sistema de estos casos tiene una sola
+capacidad ("Gestión de Pedidos"), "módulo" en la práctica se traduce en
+fases por endpoint o funcionalidad dentro de esa capacidad (por ejemplo:
+crear → historial → cambiar estado) — el agente lo va a definir así en
+la Fase 2, no hace falta corregirlo si lo propone de esa forma.
 
 ### Fase 1 — Exploración
 
@@ -354,11 +358,12 @@ invariantes toca. No propongas el plan todavía.
 
 | Carpeta | Estado |
 |---|---|
-| `caso1/` | Vacía. |
-| `caso2/` | No existe todavía. |
-| `caso3/` | No existe todavía. |
-| `caso4/` | No existe todavía. |
-| `caso5/` | No existe todavía. |
+| `caso1/` | Construido: crear pedido, ver historial y cambiar estado. |
+| `caso2/` | Construido sobre `caso1`: agrega filtro de historial por estado. |
+| `caso3/` | Construido sobre `caso2`: restringe las transiciones de estado válidas. |
+| `caso4/` | Construido sobre `caso3`: migrado a Python (Flask), mismo comportamiento. |
+| `caso5/` | En progreso: Fase 0 iniciada, todavía no cubre todas las capacidades. |
 
-Los cinco casos están pendientes de rehacerse con los prompts fase a
-fase de esta guía.
+Si volvés a correr los prompts de esta guía desde cero sobre una carpeta
+que ya tiene contenido, decíselo al agente explícitamente (o vaciá la
+carpeta antes) para que no mezcle lo viejo con lo nuevo.

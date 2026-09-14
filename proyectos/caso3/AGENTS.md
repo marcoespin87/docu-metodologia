@@ -1,6 +1,6 @@
 # Arquitectura y Convenciones
 
-**Proyecto:** Gestión de Pedidos (Caso 1)
+**Proyecto:** Gestión de Pedidos (Caso 3)
 **Patrón Arquitectónico:** Monolito simple (Rutas -> Controladores -> DB).
 **Stack:** Node.js, Express, SQLite.
 

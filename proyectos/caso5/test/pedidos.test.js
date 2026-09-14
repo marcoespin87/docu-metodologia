@@ -15,13 +15,28 @@ const app = require('../app');
 let server;
 let baseUrl;
 
-test.before(() => {
+function waitReady() {
   return new Promise((resolve) => {
+    http.get(baseUrl + '/pedidos', (res) => {
+      res.resume();
+      resolve(res.statusCode !== 500);
+    }).on('error', () => resolve(false));
+  });
+}
+
+test.before(async () => {
+  await new Promise((resolve) => {
     server = app.listen(0, () => {
       baseUrl = 'http://localhost:' + server.address().port;
       resolve();
     });
   });
+  // La tabla se crea en el callback async de apertura de SQLite; esperamos
+  // a que exista antes de correr los tests para no pisar esa carrera.
+  for (let intentos = 0; intentos < 30; intentos++) {
+    if (await waitReady()) return;
+    await new Promise((r) => setTimeout(r, 50));
+  }
 });
 
 test.after(() => {

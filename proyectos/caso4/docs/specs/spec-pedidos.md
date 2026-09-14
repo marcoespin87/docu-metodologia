@@ -1,6 +1,6 @@
 # Spec: Gestión de Pedidos
 
-**Estado:** desplegado | **Última revisión:** 2026-09-13
+**Estado:** desplegado · **Última revisión:** 2026-09-13
 
 ## Propósito
 Permitir la creación y lectura de pedidos, así como la gestión de su ciclo de vida a través de distintos estados, manteniendo un registro simple en la base de datos.

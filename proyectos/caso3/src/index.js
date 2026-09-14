@@ -133,6 +133,10 @@ app.put('/pedidos/:id/estado', (req, res) => {
     });
 });
 
-app.listen(port, () => {
-    console.log(`Sistema de pedidos ejecutándose en http://localhost:${port}`);
-});
+if (require.main === module) {
+    app.listen(port, () => {
+        console.log(`Sistema de pedidos ejecutándose en http://localhost:${port}`);
+    });
+}
+
+module.exports = app;
