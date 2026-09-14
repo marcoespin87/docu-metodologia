@@ -94,17 +94,41 @@ app.put('/pedidos/:id/estado', (req, res) => {
         });
     }
 
-    const sql = `UPDATE pedidos SET estado = ? WHERE id = ?`;
-    db.run(sql, [estado, id], function(err) {
+    // Consultar estado actual para validar invariante de ciclo de vida
+    const sqlSelect = `SELECT estado FROM pedidos WHERE id = ?`;
+    db.get(sqlSelect, [id], (err, row) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        if (this.changes === 0) {
+        if (!row) {
             return res.status(404).json({ error: 'Pedido no encontrado.' });
         }
-        res.status(200).json({ 
-            mensaje: 'Estado del pedido actualizado',
-            nuevo_estado: estado 
+
+        const estadoActual = row.estado;
+        
+        // Invariante: Ciclo de vida del pedido
+        const transicionesPermitidas = {
+            'Pendiente': ['Enviado', 'Cancelado'],
+            'Enviado': ['Entregado', 'Cancelado'],
+            'Entregado': [],
+            'Cancelado': []
+        };
+
+        if (!transicionesPermitidas[estadoActual].includes(estado)) {
+            return res.status(400).json({
+                error: `Transición de estado inválida. No se puede pasar de '${estadoActual}' a '${estado}'.`
+            });
+        }
+
+        const sqlUpdate = `UPDATE pedidos SET estado = ? WHERE id = ?`;
+        db.run(sqlUpdate, [estado, id], function(err) {
+            if (err) {
+                return res.status(500).json({ error: err.message });
+            }
+            res.status(200).json({ 
+                mensaje: 'Estado del pedido actualizado',
+                nuevo_estado: estado 
+            });
         });
     });
 });
