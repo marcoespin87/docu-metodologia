@@ -23,8 +23,31 @@ const db = new sqlite3.Database('./pedidos.db', (err) => {
 
 // GET /pedidos - Ver historial
 app.get('/pedidos', (req, res) => {
-    console.log('[INFO] Solicitud recibida: GET /pedidos');
-    db.all('SELECT * FROM pedidos', [], (err, rows) => {
+    console.log('[INFO] Solicitud recibida: GET /pedidos - Query:', req.query);
+    
+    let sql = 'SELECT * FROM pedidos';
+    let params = [];
+
+    if (req.query.estado) {
+        // Normalizar a arreglo (Express parsea como string si es uno solo, como array si son varios)
+        const estados = Array.isArray(req.query.estado) ? req.query.estado : [req.query.estado];
+        
+        // Invariante: Estados válidos estrictos
+        const estadosValidos = ['Pendiente', 'Enviado', 'Entregado', 'Cancelado'];
+        const estadosInvalidos = estados.filter(e => !estadosValidos.includes(e));
+        
+        if (estadosInvalidos.length > 0) {
+            return res.status(400).json({ 
+                error: 'Estado(s) inválido(s). Los estados permitidos son: ' + estadosValidos.join(', ') 
+            });
+        }
+
+        const placeholders = estados.map(() => '?').join(', ');
+        sql += ` WHERE estado IN (${placeholders})`;
+        params = estados;
+    }
+
+    db.all(sql, params, (err, rows) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
