@@ -38,8 +38,11 @@ Seguir este orden, no saltar pasos:
    - **No, pero el sistema ya tiene otras capacidades documentadas** → **Caso 2** (funcionalidad nueva). Ir a `references/caso2-funcionalidad-nueva.md`.
    - **No, pero SÍ hay código de esta capacidad ya corriendo sin documentar** (capacidad "huérfana" dentro de un sistema por lo demás documentado) → **Caso 5**, igual que arriba, pero acotado a esa capacidad.
    - **Sí, existe spec de esta capacidad. ¿Qué pide el usuario?**
+     - Agregar algo que el spec **todavía no describe** — una subcapacidad nueva tal que el comportamiento ya documentado sigue siendo cierto sin ningún matiz después del cambio (ej. sección 7 de la metodología: agregar un filtro por estado a un historial que ya tenía spec — sin usar el filtro, la lista sigue idéntica) → sigue siendo **Caso 2** (funcionalidad nueva), con la única diferencia de que acá el spec ya existe y en `/sdd-aplicacion` se le agrega una sección nueva en vez de nacer uno. Ir a `references/caso2-funcionalidad-nueva.md`.
      - Cambiar/eliminar algo que el spec ya describe (comportamiento u obligado a tocar implementación) → **Caso 3** (modificación de un requerimiento existente). Ir a `references/caso3-modificacion-existente.md`.
      - Reescribir en otro lenguaje/stack sin cambiar el comportamiento → **Caso 4** (migración de lenguaje). Ir a `references/caso4-migracion-lenguaje.md`.
+
+   **Cómo distinguir agregar de cambiar, cuando el spec ya existe:** no preguntar si el spec va a cambiar (las tres ramas lo cambian). Preguntar si lo que el spec **ya describe hoy** sigue siendo cierto, sin ningún matiz, después del cambio. Si sí → Caso 2 (se suma algo encima). Si algo que el spec ya prometía deja de cumplirse, o pasa a comportarse distinto → Caso 3.
 
 **No asumir el Caso en silencio.** Anunciarlo explícitamente al usuario ("Esto es un Caso N porque...") antes de seguir con el resto de la fase — es la decisión que más condiciona todo lo que sigue, y es barata de corregir acá y cara de corregir después.
 

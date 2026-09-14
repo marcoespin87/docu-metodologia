@@ -2,6 +2,12 @@
 
 El comportamiento que cambia ya está descrito en un spec.
 
+**Antes de seguir, confirmar que es realmente esto y no un Caso 2 disfrazado:** si lo pedido
+es puramente aditivo — el spec ya existe, pero lo que ya describe sigue siendo cierto sin
+ningún matiz después del cambio (ej. agregar un filtro/campo opcional que no altera nada de lo
+que había) — es **Caso 2** (subcapacidad nueva sobre spec existente), no este archivo. Ver
+`references/caso2-funcionalidad-nueva.md` y el árbol de decisión del Paso 3 de `SKILL.md`.
+
 ## Qué hacer
 
 1. Ubicar, dentro del spec de la capacidad, la porción puntual que el pedido afecta — no releer el spec entero como si fuera nuevo, sino identificar exactamente qué sección de Comportamiento/Invariantes/Decisiones está en juego.
