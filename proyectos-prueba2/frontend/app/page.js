@@ -9,8 +9,10 @@ export default function Home() {
   const [notas, setNotas] = useState([]);
   const [titulo, setTitulo] = useState("");
   const [cuerpo, setCuerpo] = useState("");
+  const [fechaLimite, setFechaLimite] = useState("");
   const [error, setError] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const hoy = new Date().toISOString().slice(0, 10);
 
   async function obtenerNotas() {
     const res = await fetch(`${API_URL}/api/notas`);
@@ -62,10 +64,13 @@ export default function Home() {
     }
 
     try {
+      const body = { titulo, cuerpo };
+      if (fechaLimite) body.fechaLimite = fechaLimite;
+
       const res = await fetch(`${API_URL}/api/notas`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ titulo, cuerpo }),
+        body: JSON.stringify(body),
       });
 
       if (!res.ok) {
@@ -75,6 +80,7 @@ export default function Home() {
 
       setTitulo("");
       setCuerpo("");
+      setFechaLimite("");
       await cargarNotas();
     } catch (err) {
       setError(err.message);
@@ -113,6 +119,14 @@ export default function Home() {
             onChange={(e) => setCuerpo(e.target.value)}
             rows={4}
           />
+          <label htmlFor="fechaLimite">Fecha límite (opcional)</label>
+          <input
+            id="fechaLimite"
+            type="date"
+            min={hoy}
+            value={fechaLimite}
+            onChange={(e) => setFechaLimite(e.target.value)}
+          />
           <button type="submit">Crear nota</button>
         </form>
 
@@ -125,11 +139,20 @@ export default function Home() {
         ) : (
           <ul className={styles.listaNotas}>
             {notas.map((nota) => (
-              <li key={nota.id} className={styles.nota}>
+              <li
+                key={nota.id}
+                className={`${styles.nota} ${nota.vencida ? styles.notaVencida : ""}`}
+              >
                 <div>
-                  <h2>{nota.titulo}</h2>
+                  <h2>
+                    {nota.titulo}
+                    {nota.vencida && <span className={styles.etiquetaVencida}>Vencida</span>}
+                  </h2>
                   <p>{nota.cuerpo}</p>
                   <small>{new Date(nota.fechaCreacion).toLocaleString()}</small>
+                  {nota.fechaLimite && (
+                    <small className={styles.fechaLimite}> · Vence: {nota.fechaLimite}</small>
+                  )}
                 </div>
                 <button onClick={() => handleEliminar(nota.id)}>Eliminar</button>
               </li>

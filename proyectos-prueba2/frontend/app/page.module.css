@@ -80,3 +80,22 @@
   cursor: pointer;
   flex-shrink: 0;
 }
+
+.notaVencida {
+  border-color: #c0392b;
+}
+
+.etiquetaVencida {
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 999px;
+  background: #c0392b;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 600;
+  vertical-align: middle;
+}
+
+.fechaLimite {
+  color: #555;
+}
