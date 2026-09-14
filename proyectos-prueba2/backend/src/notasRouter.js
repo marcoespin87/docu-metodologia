@@ -1,6 +1,6 @@
 const express = require("express");
 const { v4: uuidv4 } = require("uuid");
-const { leerNotas, guardarNotas } = require("./notasStore");
+const { listarNotas, crearNota, eliminarNota } = require("./notasStore");
 
 const router = express.Router();
 
@@ -17,7 +17,7 @@ function esFechaValida(fechaStr) {
 }
 
 router.get("/", (req, res) => {
-  const notas = leerNotas();
+  const notas = listarNotas();
   const hoy = hoyISO();
   const notasConEstado = notas.map((nota) => ({
     ...nota,
@@ -45,7 +45,6 @@ router.post("/", (req, res) => {
     fechaLimiteValidada = fechaLimite;
   }
 
-  const notas = leerNotas();
   const nuevaNota = {
     id: uuidv4(),
     titulo: titulo.trim(),
@@ -54,23 +53,18 @@ router.post("/", (req, res) => {
     fechaLimite: fechaLimiteValidada,
   };
 
-  notas.push(nuevaNota);
-  guardarNotas(notas);
+  crearNota(nuevaNota);
 
   res.status(201).json(nuevaNota);
 });
 
 router.delete("/:id", (req, res) => {
   const { id } = req.params;
-  const notas = leerNotas();
-  const existe = notas.some((nota) => nota.id === id);
+  const existia = eliminarNota(id);
 
-  if (!existe) {
+  if (!existia) {
     return res.status(404).json({ error: `no existe una nota con id ${id}` });
   }
-
-  const notasRestantes = notas.filter((nota) => nota.id !== id);
-  guardarNotas(notasRestantes);
 
   res.status(204).send();
 });

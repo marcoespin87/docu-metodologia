@@ -19,7 +19,8 @@ Permite al usuario crear notas personales con título y cuerpo, opcionalmente co
 - **`vencida` se calcula, nunca se persiste:** el campo `vencida` no vive en `notas.json`, se recalcula en cada `GET /api/notas` comparando `fechaLimite` contra la fecha actual. *(Porqué: si se persistiera quedaría desactualizado a medida que pasan los días sin que la nota se vuelva a guardar.)*
 
 ## Decisiones
-- 2026-09-14: Persistencia en archivo JSON plano (`backend/data/notas.json`) en vez de una base de datos — *Porqué: uso personal, sin necesidad de concurrencia real ni de queries complejas.*
+- 2026-09-14: Persistencia en archivo JSON plano (`backend/data/notas.json`) en vez de una base de datos — *Porqué: uso personal, sin necesidad de concurrencia real ni de queries complejas.* **(Reemplazada por la decisión del 2026-09-14 de abajo.)**
+- 2026-09-14: Persistencia migrada a SQLite (`backend/data/notas.db`, vía `better-sqlite3`) — *Porqué: el archivo JSON se reescribía completo en cada creación/eliminación, lo que dejaba de escalar con más notas. El comportamiento observable de la API y la UI no cambia; las notas existentes en `notas.json` se migran automáticamente la primera vez que arranca el backend nuevo, y el archivo JSON queda intacto en disco como backup.*
 - 2026-09-14: Backend (Express) y frontend (Next.js) como dos proyectos/procesos separados en vez de usar las API routes de Next.js — *Porqué: decisión explícita del usuario al aprobar el plan.*
 - 2026-09-14: No hay edición de notas, autenticación, búsqueda ni categorías — *Porqué: fuera del alcance pedido para esta primera versión.*
 - 2026-09-14: `fechaLimite` es solo fecha (día), sin hora — *Porqué: decisión explícita del usuario; alcanza para el caso de uso de recordatorios personales.*
@@ -33,7 +34,7 @@ Permite al usuario crear notas personales con título y cuerpo, opcionalmente co
 - Notificaciones o recordatorios activos (email, push, etc.) — solo se marca visualmente en el listado.
 
 ## Referencias
-- Código backend: `backend/src/notasRouter.js`, `backend/src/notasStore.js`, `backend/src/index.js`
+- Código backend: `backend/src/notasRouter.js`, `backend/src/notasStore.js` (persistencia en SQLite, `backend/data/notas.db`), `backend/src/index.js`
 - Código frontend: `frontend/app/page.js`
 - Tests: no hay tests automatizados todavía; verificación manual documentada en `docs/plan-gestor-notas-2026-09-14.md`
 - Arquitectura: `docs/arquitectura.md`

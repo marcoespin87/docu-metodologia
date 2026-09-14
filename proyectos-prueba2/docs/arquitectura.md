@@ -13,12 +13,12 @@ El frontend nunca accede al archivo de datos directamente — toda lectura/escri
 
 - `backend/src/index.js` — entrypoint, configura CORS y monta las rutas.
 - `backend/src/notasRouter.js` — endpoints HTTP de la capacidad `gestion-notas` (`GET/POST /api/notas`, `DELETE /api/notas/:id`).
-- `backend/src/notasStore.js` — único módulo que lee/escribe `backend/data/notas.json`. Ninguna otra parte del backend toca el archivo directamente.
+- `backend/src/notasStore.js` — único módulo que lee/escribe `backend/data/notas.db` (SQLite). Ninguna otra parte del backend toca la base de datos directamente.
 - `frontend/app/page.js` — única página de la UI; hace fetch al backend usando `NEXT_PUBLIC_API_URL`.
 
 ## Invariantes transversales
 
-- **Persistencia sin base de datos:** las notas viven en `backend/data/notas.json`, un archivo JSON plano. *(Porqué: alcance personal/de un solo usuario, sin necesidad de concurrencia real ni de una base de datos.)*
+- **Persistencia en SQLite embebido:** las notas viven en `backend/data/notas.db`, accedido con `better-sqlite3` (API síncrona, sin proceso de base de datos separado). *(Porqué: reemplaza al archivo JSON plano anterior, que se reescribía completo en cada creación/eliminación y dejaba de escalar con más notas; sigue sin requerir un servidor de base de datos aparte porque el uso es personal/de un solo proceso.)* El archivo `backend/data/notas.json` anterior queda en disco como backup histórico; el backend ya no lo lee ni lo escribe.
 - **Sin autenticación:** no hay login ni separación por usuario — un único espacio de notas compartido por quien use la app localmente. *(Porqué: uso personal, decidido explícitamente fuera de alcance en el plan inicial.)*
 - **CORS restringido al origen del frontend:** el backend solo acepta requests desde `FRONTEND_ORIGIN` (por defecto `http://localhost:3000`), no `*`. *(Porqué: evitar que cualquier origen externo pueda leer/borrar notas si el backend queda expuesto en la red local.)*
 
