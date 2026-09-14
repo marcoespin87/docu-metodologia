@@ -1,0 +1,9 @@
+{
+  "name": "spec-anchored-sdd",
+  "version": "1.0.0",
+  "description": "Skills para aplicar la metodología SDD Spec-Anchored (specs vivos por capacidad, actualizados en el mismo cambio que el código) fase a fase — Exploración, Propuesta de cambio, Aplicación del cambio y Verificación y fusión — cubriendo los 5 escenarios de partida: desde cero, funcionalidad nueva, modificación de un requerimiento existente, migración de lenguaje y código heredado sin spec previo.",
+  "author": {
+    "name": "Marco Espin"
+  },
+  "keywords": ["spec-driven-development", "sdd", "spec-anchored", "methodology", "documentation"]
+}
