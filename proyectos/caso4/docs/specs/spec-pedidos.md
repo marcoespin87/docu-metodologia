@@ -20,6 +20,7 @@ Permitir la creación y lectura de pedidos, así como la gestión de su ciclo de
 - 2026-09-13: El cambio de estado usa el método `PUT` en lugar de `PATCH` — *Porqué: fue una decisión explícita del usuario durante el diseño del plan, a pesar de que semánticamente se actualice un solo campo.*
 - 2026-09-13: El filtrado de historial se implementa en el servidor (SQL), admite múltiples estados simultáneos y devuelve HTTP 400 ante estados inválidos — *Porqué: decisión del usuario para favorecer delegación en backend, flexibilidad y asegurar rigurosidad con el invariante de "Estados Válidos Estrictos".*
 - 2026-09-13: Se usa código de estado HTTP 400 Bad Request para rechazar transiciones de estado inválidas por ciclo de vida — *Porqué: decisión del usuario durante la planificación.*
+- 2026-09-14: Se reescribe la aplicación de Node.js a Python (Flask) manteniendo el comportamiento estricto y la base de datos (delta nulo). — *Porqué: decisión del usuario (Caso 4 metodológico).*
 
 ## Fuera de alcance
 - Autenticación o roles de usuario.
@@ -29,5 +30,5 @@ Permitir la creación y lectura de pedidos, así como la gestión de su ciclo de
 - Logística e integraciones de envío.
 
 ## Referencias
-- Archivo principal: `src/index.js`
+- Archivo principal: `src/app.py`
 - Base de datos: `pedidos.db`

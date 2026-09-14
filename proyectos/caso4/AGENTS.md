@@ -1,8 +1,8 @@
 # Arquitectura y Convenciones
 
-**Proyecto:** Gestión de Pedidos (Caso 1)
+**Proyecto:** Gestión de Pedidos (Migrado a Python)
 **Patrón Arquitectónico:** Monolito simple (Rutas -> Controladores -> DB).
-**Stack:** Node.js, Express, SQLite.
+**Stack:** Python, Flask, SQLite.
 
 ## Invariantes Transversales
 - **Persistencia local:** Se usa SQLite en un archivo local (`pedidos.db`). No hay base de datos distribuida ni réplicas.
@@ -14,4 +14,5 @@
 - **Fusión anclada:** Cualquier cambio en el comportamiento (nuevo endpoint, nueva regla de estado) se actualiza en el código Y en el spec correspondiente (`docs/specs/spec-*.md`) en el mismo commit.
 
 ## Comandos Útiles
-- Iniciar servidor: `node src/index.js`
+- Iniciar servidor: `python src/app.py`
+- Ejecutar tests de caracterización: `pytest tests/`
