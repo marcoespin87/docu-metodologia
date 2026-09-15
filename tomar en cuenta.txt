@@ -1,0 +1,23 @@
+- Siempre docuemnte priumeor la spec luego codifique
+- Siempre se vaya en linea de la metodolgoia, siempre revise docuemnto de ¿arquitectura? (Se Deben dejar en claro o el agente siempre debe tener en cuenta decisions y normas principales, reglas, decisions de estilos, etc, etc para implelemmtar algo. esto si se lo controla?)
+- Generalizar para todo agente.
+- Diapositivas para indicar guia de instalacion de skills.
+
+===================
+
+PROXIMAS MEJORAS: 
+
+- Tener en cuenta 
+- Control de versiones con git (Nueva fase o en fase de verificación).
+
+========================================================================
+AGENTES:
+
+- Revisar a fondo si se estaban cacheando los prompts de los agentes en el Proyecto.
+
+=====================================================================
+
+Tener en ceunta como se están estructurando los specs, granuliad de los specs, plan - spec, o plan - modulo funcionalidad - specs. plan - spec - subspec. 
+
+- Tener en cuenta aspectos como la memoria del agente.
+- Verificar que por el momento no se cuente con control de versiones o git.
